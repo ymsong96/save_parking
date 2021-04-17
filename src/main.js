@@ -256,9 +256,20 @@ export default class Main extends Component{
     this.setState({overlayVisible:false})
   }
   
+  setCurrentMarker(latitude, longitude){
+    this.setState({zoom:this.state.zoomlevel.zoom+1},()=>{
+      this._map.animateToCoordinate(
+        {
+          latitude: latitude,
+          longitude: longitude,
+        },
+        1000
+      )
+    })
+  }
   setSelectedParking(parking){
     this.setState({zoom:17},()=>{
-      this._map.animateToCoordinat(
+      this._map.animateToCoordinate(
         {
           latitude: parking.latitude,
           longitude: parking.longitude,
@@ -593,7 +604,7 @@ export default class Main extends Component{
                       pinColor="#002166"
                       image={require('./images/circle.png')}
                       caption={{text: String(num[j]) ,textSize:14,color:"#000000",haloColor:'none',align:Align.Center}}
-                      //onClick={()=> {this.setCurrentMarker(lat_avg[j], lon_avg[j])}}
+                      onClick={()=> {this.setCurrentMarker(lat_avg[j], lon_avg[j])}}
                       >
                       </Marker>
                     )
